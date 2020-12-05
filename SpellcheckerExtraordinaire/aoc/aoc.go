@@ -21,7 +21,7 @@ func readFile(path string) string {
 }
 
 func SolvePuzzle(solver AoCSolver) {
-	fmt.Printf("== Solution for Day %v ==\n", solver.Day())
+	fmt.Printf("\n== Solution for Day %v ==\n", solver.Day())
 
 	sample := readFile("sample.txt")
 	puzzle := readFile("puzzle.txt")
@@ -37,4 +37,6 @@ func SolvePuzzle(solver AoCSolver) {
 	solver.SolvePartTwo(sample)
 	fmt.Println("Attempt to solve full input:")
 	solver.SolvePartTwo(puzzle)
+
+	fmt.Printf("\n\n")
 }

@@ -10,8 +10,6 @@ import (
 
 type AoC1Solver uint
 
-var numberCache []int = nil
-
 func findPair(numbers []int) (int, int) {
 	for i, num1 := range numbers {
 		for j := len(numbers) - 1; j > i; j-- {
@@ -46,10 +44,6 @@ func findTriple(numbers []int) (int, int, int) {
 }
 
 func convertInput(input string) []int {
-	if numberCache != nil {
-		return numberCache
-	}
-
 	scanner := bufio.NewScanner(strings.NewReader(input))
 	scanner.Split(bufio.ScanLines)
 
