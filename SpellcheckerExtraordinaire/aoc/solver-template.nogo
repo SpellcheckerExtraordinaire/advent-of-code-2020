@@ -1,10 +1,9 @@
-package aoc
+package aocX
 
-/*
-import {
+import (
 	"aoc-2020-go/aoc"
-}
-*/
+)
+
 type AoCXSolver uint
 
 func (me AoCXSolver) SolvePartOne(input string) {
@@ -20,6 +19,6 @@ func (me AoCXSolver) Day() uint {
 }
 
 func Solve() {
-	//solver := AoCXSolver(0)
-	//aoc.SolvePuzzle(solver)
+	solver := AoCXSolver(X)
+	aoc.SolvePuzzle(solver)
 }
