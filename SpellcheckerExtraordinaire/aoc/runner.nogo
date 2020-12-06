@@ -1,9 +1,0 @@
-package main
-
-import (
-	"aoc-2020-go/dayX/aocX"
-)
-
-func main() {
-	aocX.Solve()
-}

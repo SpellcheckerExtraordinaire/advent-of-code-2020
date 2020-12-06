@@ -1,9 +1,9 @@
 package main
 
 import (
-	"aoc-2020-go/day1/aoc1"
-	"aoc-2020-go/day2/aoc2"
-	"aoc-2020-go/day3/aoc3"
+	"aoc-2020-go/day1"
+	"aoc-2020-go/day2"
+	"aoc-2020-go/day3"
 	"fmt"
 	"io/ioutil"
 	"os"
@@ -11,15 +11,19 @@ import (
 	"strings"
 )
 
-var solvers = []func(){aoc1.Solve, aoc2.Solve, aoc3.Solve}
+var solvers = []func(){day1.Solve, day2.Solve, day3.Solve}
+
+func run(day int) {
+	path := "./day" + strconv.Itoa(day+1)
+	fmt.Println(path)
+	os.Chdir(path)
+	solvers[day]()
+	os.Chdir("..")
+}
 
 func runAll() {
-	for day, solver := range solvers {
-		path := "./day" + strconv.Itoa(day+1)
-		fmt.Println(path)
-		os.Chdir(path)
-		solver()
-		os.Chdir("..")
+	for day, _ := range solvers {
+		run(day)
 	}
 }
 
@@ -36,21 +40,13 @@ func createNextDay() {
 	newDay := "./day" + dayNum
 
 	os.Mkdir(newDay, os.ModeDir)
-	os.Mkdir(newDay+"/aoc"+dayNum, os.ModeDir)
 
 	// copy template, substituting the correct day
 	{
 		data, _ := ioutil.ReadFile("./aoc/solver-template.nogo")
 		code := string(data)
 		code = strings.ReplaceAll(code, "X", dayNum)
-		ioutil.WriteFile(newDay+"/aoc"+dayNum+"/aoc"+dayNum+".go", []byte(code), 0666)
-	}
-
-	{
-		data, _ := ioutil.ReadFile("./aoc/runner.nogo")
-		code := string(data)
-		code = strings.ReplaceAll(code, "X", dayNum)
-		ioutil.WriteFile(newDay+"/runDay"+dayNum+".go", []byte(code), 0666)
+		ioutil.WriteFile(newDay+"/day"+dayNum+".go", []byte(code), 0666)
 	}
 
 	// create files for puzzle input
@@ -78,10 +74,10 @@ func createNextDay() {
 	ioutil.WriteFile("./cli-backup.nogo", data, 0666)
 	code := string(data)
 	prevDay := strconv.Itoa(len(dirs))
-	importPath := "aoc-2020-go/day" + prevDay + "/aoc" + prevDay + "\""
-	prevSolver := ", aoc" + prevDay + ".Solve"
-	code = strings.Replace(code, importPath, importPath+"\n\t\""+"aoc-2020-go/day"+dayNum+"/aoc"+dayNum+"\"", 1)
-	code = strings.Replace(code, prevSolver, prevSolver+", aoc"+dayNum+".Solve", 1)
+	importPath := "aoc-2020-go/day" + prevDay + "\""
+	prevSolver := ", day" + prevDay + ".Solve"
+	code = strings.Replace(code, importPath, importPath+"\n\t\""+"aoc-2020-go/day"+dayNum+"\"", 1)
+	code = strings.Replace(code, prevSolver, prevSolver+", day"+dayNum+".Solve", 1)
 	ioutil.WriteFile("./cli.go", []byte(code), 0666)
 
 }
@@ -93,5 +89,12 @@ func main() {
 		runAll()
 	} else if os.Args[1] == "nextDay" {
 		createNextDay()
+	} else {
+		solverIndex, err := strconv.ParseInt(os.Args[1], 10, 0)
+		if err != nil {
+			fmt.Println("Invalid Argument, " + err.Error())
+		}
+
+		run(int(solverIndex - 1))
 	}
 }

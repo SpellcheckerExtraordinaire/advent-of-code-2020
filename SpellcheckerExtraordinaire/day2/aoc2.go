@@ -1,4 +1,4 @@
-package aoc2
+package day2
 
 import (
 	"aoc-2020-go/aoc"
