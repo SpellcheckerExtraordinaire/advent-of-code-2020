@@ -4,6 +4,7 @@ import (
 	"aoc-2020-go/day1"
 	"aoc-2020-go/day2"
 	"aoc-2020-go/day3"
+	"aoc-2020-go/day4"
 	"fmt"
 	"io/ioutil"
 	"os"
@@ -11,11 +12,10 @@ import (
 	"strings"
 )
 
-var solvers = []func(){day1.Solve, day2.Solve, day3.Solve}
+var solvers = []func(){day1.Solve, day2.Solve, day3.Solve, day4.Solve}
 
 func run(day int) {
 	path := "./day" + strconv.Itoa(day+1)
-	fmt.Println(path)
 	os.Chdir(path)
 	solvers[day]()
 	os.Chdir("..")
@@ -39,14 +39,14 @@ func createNextDay() {
 	dayNum := strconv.Itoa(len(dirs) + 1)
 	newDay := "./day" + dayNum
 
-	os.Mkdir(newDay, os.ModeDir)
+	os.Mkdir(newDay, 0777)
 
 	// copy template, substituting the correct day
 	{
 		data, _ := ioutil.ReadFile("./aoc/solver-template.nogo")
 		code := string(data)
 		code = strings.ReplaceAll(code, "X", dayNum)
-		ioutil.WriteFile(newDay+"/day"+dayNum+".go", []byte(code), 0666)
+		ioutil.WriteFile(newDay+"/day"+dayNum+".go", []byte(code), 0777)
 	}
 
 	// create files for puzzle input
@@ -71,14 +71,14 @@ func createNextDay() {
 
 	// modify myself >:)
 	data, _ := ioutil.ReadFile("./cli.go")
-	ioutil.WriteFile("./cli-backup.nogo", data, 0666)
+	ioutil.WriteFile("./cli-backup.nogo", data, 0777)
 	code := string(data)
 	prevDay := strconv.Itoa(len(dirs))
 	importPath := "aoc-2020-go/day" + prevDay + "\""
 	prevSolver := ", day" + prevDay + ".Solve"
 	code = strings.Replace(code, importPath, importPath+"\n\t\""+"aoc-2020-go/day"+dayNum+"\"", 1)
 	code = strings.Replace(code, prevSolver, prevSolver+", day"+dayNum+".Solve", 1)
-	ioutil.WriteFile("./cli.go", []byte(code), 0666)
+	ioutil.WriteFile("./cli.go", []byte(code), 0777)
 
 }
 
