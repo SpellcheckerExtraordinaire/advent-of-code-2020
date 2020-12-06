@@ -6,12 +6,14 @@ SLOPES = [(1, 1), (3, 1), (5, 1), (7, 1), (1, 2)]
 
 
 def getInput(input_name):
-    """returns the input of the file as a list of the lines"""
+    """returns the input of the file as a list of the lines
+     works perfect for .rtf files
+    .txt files need adjusting"""
     f = open(input_name, "r")
     lines = f.readlines()
     lines = lines[9:]
 
-    input = []
+    input_list = []
 
     for i in range(len(lines)):
 
@@ -22,9 +24,9 @@ def getInput(input_name):
         else:
             line = lines[i][:len(lines[i]) - 2]
 
-        input.append(line)
+        input_list.append(line)
 
-    return input
+    return input_list
 
 
 def howManyTrees(input, x_slope, y_slope):

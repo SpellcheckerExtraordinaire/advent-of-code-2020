@@ -8,12 +8,14 @@ REQUIRED_FIELDS = [["byr:", (1920, 2002)], ["iyr:", (2010, 2020)], ["eyr:", (202
 
 
 def getInput(input_name):
-    """returns the input of the file as a list of the lines"""
+    """returns the input of the file as a list of the lines
+     works perfect for .rtf files
+    .txt files need adjusting"""
     f = open(input_name, "r")
     lines = f.readlines()
     lines = lines[9:]
 
-    input = []
+    input_list = []
 
     for i in range(len(lines)):
 
@@ -24,9 +26,9 @@ def getInput(input_name):
         else:
             line = lines[i][:len(lines[i]) - 2]
 
-        input.append(line)
+        input_list.append(line)
 
-    return input
+    return input_list
 
 
 def howManyValidPassports(input):

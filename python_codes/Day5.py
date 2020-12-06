@@ -1,10 +1,12 @@
 def getInput(input_name):
-    """returns the input of the file as a list of the lines"""
+    """returns the input of the file as a list of the lines
+     works perfect for .rtf files
+    .txt files need adjusting"""
     f = open(input_name, "r")
     lines = f.readlines()
     lines = lines[9:]
 
-    input = []
+    input_list = []
 
     for i in range(len(lines)):
 
@@ -15,9 +17,10 @@ def getInput(input_name):
         else:
             line = lines[i][:len(lines[i]) - 2]
 
-        input.append(line)
+        input_list.append(line)
 
-    return input
+    return input_list
+
 
 def getRowOrColumn(boarding_pass, low, high, lower, upper):
     """
@@ -31,13 +34,14 @@ def getRowOrColumn(boarding_pass, low, high, lower, upper):
     """
     for letter in boarding_pass:
         if letter == lower:
-            range = (high-low)//2
+            range = (high - low) // 2
             high = low + range
         if letter == upper:
             range = (high - low) // 2
             low = high - range
 
     return low
+
 
 def getSeatIDs(input):
     """
@@ -51,7 +55,7 @@ def getSeatIDs(input):
     for boarding_pass in input:
         row = getRowOrColumn(boarding_pass, 0, 127, 'F', 'B')
         column = getRowOrColumn(boarding_pass, 0, 7, 'L', 'R')
-        l.append(row*8 + column)
+        l.append(row * 8 + column)
 
     l.sort()
     return l
@@ -64,10 +68,10 @@ def findMySeatID(seatIds):
     :return: the missing seat in the list of seats
     """
 
-    for i in range(8, len(seatIds)-7):
-        before = seatIds[i-1]
+    for i in range(8, len(seatIds) - 7):
+        before = seatIds[i - 1]
         current = seatIds[i]
-        after = seatIds[i+1]
+        after = seatIds[i + 1]
         if before != (current - 1) and current != (after + 1):
             return seatIds[i] - 1
 
@@ -75,7 +79,6 @@ def findMySeatID(seatIds):
 if __name__ == '__main__':
     test = getInput("Test-5.rtf")
     input = getInput("Input-Day5.rtf")
-    #print(test)
+    # print(test)
     ids = getSeatIDs(input)
     print(findMySeatID(ids))
-
