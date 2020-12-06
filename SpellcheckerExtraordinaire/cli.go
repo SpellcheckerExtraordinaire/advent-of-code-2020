@@ -12,18 +12,18 @@ import (
 	"strings"
 )
 
-var solvers = []func(){day1.Solve, day2.Solve, day3.Solve, day4.Solve}
+var solvers = []func(bool){day1.Solve, day2.Solve, day3.Solve, day4.Solve}
 
-func run(day int) {
+func run(day int, sampleOnly bool) {
 	path := "./day" + strconv.Itoa(day+1)
 	os.Chdir(path)
-	solvers[day]()
+	solvers[day](sampleOnly)
 	os.Chdir("..")
 }
 
 func runAll() {
 	for day, _ := range solvers {
-		run(day)
+		run(day, false)
 	}
 }
 
@@ -95,6 +95,6 @@ func main() {
 			fmt.Println("Invalid Argument, " + err.Error())
 		}
 
-		run(int(solverIndex - 1))
+		run(int(solverIndex-1), argLength == 2)
 	}
 }

@@ -65,7 +65,7 @@ func (me AoC3Solver) Day() uint {
 	return uint(me)
 }
 
-func Solve() {
+func Solve(sampleOnly bool) {
 	solver := AoC3Solver(3)
-	aoc.SolvePuzzle(solver)
+	aoc.SolvePuzzle(solver, sampleOnly)
 }

@@ -20,7 +20,7 @@ func readFile(path string) string {
 	return string(data)
 }
 
-func SolvePuzzle(solver AoCSolver) {
+func SolvePuzzle(solver AoCSolver, sampleOnly bool) {
 	fmt.Printf("\n== Solution for Day %v ==\n", solver.Day())
 
 	sample := readFile("sample.txt")
@@ -29,14 +29,18 @@ func SolvePuzzle(solver AoCSolver) {
 	fmt.Println("-- Part One --")
 	fmt.Println("Attempt to solve sample:")
 	solver.SolvePartOne(sample)
-	fmt.Println("Attempt to solve full input:")
-	solver.SolvePartOne(puzzle)
+	if !sampleOnly {
+		fmt.Println("Attempt to solve full input:")
+		solver.SolvePartOne(puzzle)
+	}
 
 	fmt.Println("-- Part Two --")
 	fmt.Println("Attempt to solve sample:")
 	solver.SolvePartTwo(sample)
-	fmt.Println("Attempt to solve full input:")
-	solver.SolvePartTwo(puzzle)
+	if !sampleOnly {
+		fmt.Println("Attempt to solve full input:")
+		solver.SolvePartTwo(puzzle)
+	}
 
 	fmt.Printf("\n\n")
 }
