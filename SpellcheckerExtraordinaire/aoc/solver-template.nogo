@@ -2,6 +2,9 @@ package dayX
 
 import (
 	"aoc-2020-go/aoc"
+	"bufio"
+	"fmt"
+	"strings"
 )
 
 type AoCXSolver uint
