@@ -54,7 +54,26 @@ func (me AoC5Solver) SolvePartOne(input string) {
 }
 
 func (me AoC5Solver) SolvePartTwo(input string) {
+	scanner := bufio.NewScanner(strings.NewReader(input))
+	scanner.Split(bufio.ScanLines)
 
+	var seats [128 * 8]bool
+
+	for scanner.Scan() {
+		line := scanner.Text()
+		newSeat := seatId(line)
+		seats[newSeat] = true
+	}
+
+	var mySeat int
+	for seatId, occupied := range seats {
+		if !occupied && (seatId > 0 && seats[seatId-1]) && seats[seatId+1] {
+			mySeat = seatId
+			break
+		}
+	}
+
+	fmt.Println("SeatID: " + strconv.Itoa(mySeat))
 }
 
 func (me AoC5Solver) Day() uint {
