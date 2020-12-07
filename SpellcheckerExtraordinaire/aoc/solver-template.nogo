@@ -7,11 +7,25 @@ import (
 type AoCXSolver uint
 
 func (me AoCXSolver) SolvePartOne(input string) {
+	scanner := bufio.NewScanner(strings.NewReader(input))
+	scanner.Split(bufio.ScanLines)
 
+	for scanner.Scan() {
+		line := scanner.Text()
+
+	}
+	fmt.Println("Result: " + "")
 }
 
 func (me AoCXSolver) SolvePartTwo(input string) {
+	scanner := bufio.NewScanner(strings.NewReader(input))
+	scanner.Split(bufio.ScanLines)
 
+	for scanner.Scan() {
+		line := scanner.Text()
+
+	}
+	fmt.Println("Result: " + "")
 }
 
 func (me AoCXSolver) Day() uint {
