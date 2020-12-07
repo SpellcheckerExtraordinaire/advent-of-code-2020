@@ -20,6 +20,28 @@ func countIndividualAnswers(answers []string) int {
 	return len(answerMap)
 }
 
+func countCommonAnswers(answers []string) int {
+	answerMap := make(map[rune]int)
+	for _, str := range answers {
+		for _, letter := range str {
+			_, exists := answerMap[letter]
+			if !exists {
+				answerMap[letter] = 1
+			} else {
+				answerMap[letter] += 1
+			}
+		}
+	}
+
+	commonCount := 0
+	for _, count := range answerMap {
+		if count == len(answers) {
+			commonCount++
+		}
+	}
+	return commonCount
+}
+
 func (me AoC6Solver) SolvePartOne(input string) {
 	scanner := bufio.NewScanner(strings.NewReader(input))
 	scanner.Split(bufio.ScanLines)
@@ -43,7 +65,25 @@ func (me AoC6Solver) SolvePartOne(input string) {
 }
 
 func (me AoC6Solver) SolvePartTwo(input string) {
+	scanner := bufio.NewScanner(strings.NewReader(input))
+	scanner.Split(bufio.ScanLines)
 
+	count := 0
+	answers := make([]string, 0, 0)
+	for scanner.Scan() {
+		line := scanner.Text()
+		if len(line) > 0 {
+			answers = append(answers, line)
+		} else {
+			count += countCommonAnswers(answers)
+			answers = make([]string, 0, 0)
+		}
+	}
+	// handle last line, bit hacky
+	if len(answers) != 0 {
+		count += countCommonAnswers(answers)
+	}
+	fmt.Println("Count: " + strconv.Itoa(count))
 }
 
 func (me AoC6Solver) Day() uint {
