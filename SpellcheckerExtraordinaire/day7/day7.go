@@ -72,6 +72,14 @@ func recursiveTraversal(cur Bag) {
 	}
 }
 
+func summingTraversal(cur Bag) int {
+	totalBags := 1
+	for color, amount := range cur.contains {
+		totalBags += amount * summingTraversal(stringToBag[color])
+	}
+	return totalBags
+}
+
 func (me AoC7Solver) SolvePartOne(input string) {
 	stringToBag = make(map[string]Bag)
 	canContainGold = make(map[string]bool)
@@ -85,14 +93,23 @@ func (me AoC7Solver) SolvePartOne(input string) {
 	}
 
 	recursiveTraversal(stringToBag["shinygold"])
-
-	fmt.Println(canContainGold)
-
-	fmt.Println("Result: " + strconv.Itoa(len(canContainGold)))
+	fmt.Println("Number of bags that can contain shiny gold: " + strconv.Itoa(len(canContainGold)))
 }
 
 func (me AoC7Solver) SolvePartTwo(input string) {
+	stringToBag = make(map[string]Bag)
 
+	scanner := bufio.NewScanner(strings.NewReader(input))
+	scanner.Split(bufio.ScanLines)
+
+	for scanner.Scan() {
+		rule := scanner.Text()
+		processRule(rule)
+	}
+
+	bagsNeeded := summingTraversal(stringToBag["shinygold"]) - 1
+
+	fmt.Println("Bags needed: " + strconv.Itoa(bagsNeeded))
 }
 
 func (me AoC7Solver) Day() uint {

@@ -45,7 +45,6 @@ func (me AoC5Solver) SolvePartOne(input string) {
 	for scanner.Scan() {
 		line := scanner.Text()
 		newSeat := seatId(line)
-		fmt.Println(line + ": " + strconv.Itoa(newSeat))
 		if newSeat > highestSeat {
 			highestSeat = newSeat
 		}
