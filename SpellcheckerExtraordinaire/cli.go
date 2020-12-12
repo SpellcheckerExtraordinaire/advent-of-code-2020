@@ -12,6 +12,7 @@ import (
 	"aoc-2020-go/day9"
     "aoc-2020-go/day10"
 	"aoc-2020-go/day11"
+	"aoc-2020-go/day12"
 	"fmt"
 	"io/ioutil"
 	"os"
@@ -19,7 +20,7 @@ import (
 	"strings"
 )
 
-var solvers = []func(bool){day1.Solve, day2.Solve, day3.Solve, day4.Solve, day5.Solve, day6.Solve, day7.Solve, day8.Solve, day9.Solve, day10.Solve, day11.Solve}
+var solvers = []func(bool){day1.Solve, day2.Solve, day3.Solve, day4.Solve, day5.Solve, day6.Solve, day7.Solve, day8.Solve, day9.Solve, day10.Solve, day11.Solve, day12.Solve}
 
 func run(day int, sampleOnly bool) {
 	path := "./day" + strconv.Itoa(day+1)
